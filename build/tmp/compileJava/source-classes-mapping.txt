@@ -2,9 +2,9 @@ model/Product.java
  model.Product
 service/IGeneralDAO.java
  service.IGeneralDAO
-service/IProductDAO.java
- service.IProductDAO
-service/ProductDAO.java
- service.ProductDAO
 controller/ProductServlet.java
  controller.ProductServlet
+service/ProductDAO.java
+ service.ProductDAO
+service/IProductDAO.java
+ service.IProductDAO

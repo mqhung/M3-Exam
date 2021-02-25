@@ -77,9 +77,9 @@ public class ProductDAO implements IProductDAO {
     }
 
     @Override
-    public Product selectProductByName(String inputSearch) {
+    public List<Product> selectProductByName(String inputSearch) {
         String search = "%" + inputSearch + "%";
-        Product products = null;
+        List<Product> products = null;
         Connection connection = getConnection();
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_PRODUCT_BY_NAME);
@@ -93,7 +93,7 @@ public class ProductDAO implements IProductDAO {
                 String description = rs.getString("description");
                 int category_id = rs.getInt("category_id");
                 int id = rs.getInt("id");
-                products = new Product(id, name, price, quantity, color, description, category_id);
+                products.add(new Product(id, name, price, quantity, color, description, category_id));
             }
         } catch (SQLException exception) {
             exception.printStackTrace();

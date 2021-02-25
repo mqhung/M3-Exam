@@ -29,6 +29,7 @@ public class ProductServlet extends HttpServlet {
             case "edit":
                 updateProduct(request, response);
                 break;
+
         }
     }
 
@@ -70,27 +71,6 @@ public class ProductServlet extends HttpServlet {
             e.printStackTrace();
         }
     }
-
-    private void searchByName(HttpServletRequest request, HttpServletResponse response) {
-        String search = request.getParameter("search");
-        RequestDispatcher requestDispatcher;
-        Product products = productDAO.selectProductByName(search);
-        if(products == null) {
-            requestDispatcher = request.getRequestDispatcher("error-404.jsp");
-        } else {
-            request.setAttribute("product", products);
-            requestDispatcher = request.getRequestDispatcher("view/find.jsp");
-        }
-        try {
-            requestDispatcher.forward(request, response);
-        } catch (ServletException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String action = request.getParameter("action");
         if (action == null) {
@@ -114,7 +94,24 @@ public class ProductServlet extends HttpServlet {
                 break;
         }
     }
-
+    private void searchByName(HttpServletRequest request, HttpServletResponse response) {
+        String search = request.getParameter("search");
+        RequestDispatcher requestDispatcher;
+        List<Product> products = productDAO.selectProductByName(search);
+        if(products == null) {
+            requestDispatcher = request.getRequestDispatcher("error-404.jsp");
+        } else {
+            request.setAttribute("product", products);
+            requestDispatcher = request.getRequestDispatcher("view/find.jsp");
+        }
+        try {
+            requestDispatcher.forward(request, response);
+        } catch (ServletException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
     private void home(HttpServletRequest request, HttpServletResponse response) {
         List<Product> products = productDAO.selectAllProduct();
         request.setAttribute("listProduct", products);
